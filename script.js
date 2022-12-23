@@ -26,10 +26,10 @@ params.branches = 3
 params.spin = 1.5
 params.randomness = 5
 params.randomnessPower = 3
-params.insideColor = '#ff5588'
+params.insideColor = '#ff6030'
 params.outsideColor = '#1b3984'
 
-const gui = new GUI()
+const gui = new GUI({ width: 450 })
 
 let pointsGeometry = null
 let pointsMaterial = null
@@ -61,7 +61,8 @@ const generateGalaxy = () => {
 
     // randomly moving the particles from their base positions in +ve and -ve direction of all 3 axes
     const randomX = Math.pow(Math.random(), params.randomness) * (Math.random() < 0.5 ? 1 : -1)
-    const randomY = Math.pow(Math.random(), params.randomness) * (Math.random() < 0.5 ? 1 : -1)
+    // const randomY = Math.pow(Math.random(), params.randomness) * (Math.random() < 0.5 ? 1 : -1)
+    const randomY = 0
     const randomZ = Math.pow(Math.random(), params.randomness) * (Math.random() < 0.5 ? 1 : -1)
 
     positions[i] = Math.sin(nextAngle + spinAngle) * dis + randomX
@@ -81,7 +82,6 @@ const generateGalaxy = () => {
   pointsGeometry = new BufferGeometry()
   pointsGeometry.setAttribute('position', new BufferAttribute(positions, 3))
   pointsGeometry.setAttribute('color', new BufferAttribute(colors, 3))
-  console.log(pointsGeometry)
 
   pointsMaterial = new PointsMaterial({
     size: params.size,
@@ -100,7 +100,7 @@ generateGalaxy()
 // Adding the control parameters
 gui.add(params, 'count').min(100).max(1000000).step(100).onFinishChange(generateGalaxy)
 gui.add(params, 'size').min(0.01).max(0.1).step(0.001).onFinishChange(generateGalaxy)
-gui.add(params, 'radius').min(5).max(20).step(0.1).onFinishChange(generateGalaxy)
+gui.add(params, 'radius').min(5).max(50).step(0.1).onFinishChange(generateGalaxy)
 gui.add(params, 'branches').min(2).max(20).step(1).onFinishChange(generateGalaxy)
 gui.add(params, 'spin').min(-5).max(5).step(0.001).onFinishChange(generateGalaxy)
 gui.add(params, 'randomness').min(0).max(10).step(0.001).onFinishChange(generateGalaxy)
@@ -114,7 +114,7 @@ const size = {
 }
 
 const camera = new PerspectiveCamera(90, size.width / size.height)
-camera.position.set(0, 5, 3)
+camera.position.set(0, 0.1, 9)
 
 const canvas = document.querySelector('canvas.webgl')
 
